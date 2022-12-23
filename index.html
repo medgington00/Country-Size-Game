@@ -11,8 +11,14 @@
 	
 	<body>
 	
-		<div class="flexbox-row" id="header">
-			<div id="header"> COUNTRY SIZE GAME </div>
+		<div class="flexbox-row">
+			<div id="header-left"> </div>
+			<div id="header-center"> COUNTRY SIZE GAME </div>
+			<div id="header-right"> 
+				<button id="header-right-button" style="margin-right:1vw;" onclick="openPopup('HOW TO PLAY', 'white', 'GUESS WHICH COUNTRY YOU BELIEVE TO BE LARGER', 'DIFFICULTY INCREASES AS STREAK GETS HIGHER', 'YOU HAVE THREE LIVES', 'LET\'S PLAY')"> <img src="images/how-to-play.png" style="height:2vw"> </button>
+				<button id="header-right-button" style="margin-right:2vw;" onclick="openPopup('ABOUT', 'white', 'COUNTRY TOTAL MASS PROVIDED BY WIKIPEDIA', 'INCLUDES BOTH LAND AND WATER WITHOUT TERRITORIES', 'QUESTIONS/CONCERNS? CONTACT ME AT EDGINGTON.63@OSU.EDU', 'CLOSE')"> <img src="images/about.png" style="height:2vw"> </button>
+				<!--<button id="header-right-button" style="margin-right:2vw;"> <img src="images/settings.png" style="height:2vw"> </button>-->
+			</div>
 		</div>
 		
 		<div class="flexbox-row">
@@ -25,7 +31,7 @@
 			<div style="flex:3"> </div>
 			<div id="two-country-container"> 
 				<div class="two-country-text" id="country-1-text" style="flex:4"> COUNTRY 1</div>
-				<div class="two-country-text"  style="flex:1;font-size:36px;"> OR </div>
+				<div class="two-country-text" id="country-or-text" style="flex:1;font-size:2.75vw;"> OR </div>
 				<div class="two-country-text" id="country-2-text" style="flex:4"> COUNTRY 2</div>
 			</div>
 			<div style="flex:3"> </div>
@@ -49,16 +55,20 @@
 			<div style="flex:3"> </div>
 		</div>
 		
+		<div class="flexbox-row" style="width:100%;justify-content:center;gap:1vw;">
+			<div class="life-container" id="life-1"> </div>
+			<div class="life-container" id="life-2"> </div>
+			<div class="life-container" id="life-3"> </div>
+		</div>
+		
 		<!-- POPUP ELEMENTS --------------------------------------------------------------------------------------------------------------------------->
 		<div id="popup-background"> </div>
 		<div id="popup" class="popup"> 
-			<div style="flex:1"> </div>
-			<div id="popup-main-message" style="flex:1"> CORRECT! </div>
-			<div style="flex:1"> </div>
-			<div id="popup-explain-message" style="flex:1"> RUSSIA IS 99.5% LARGER THAN THE VATICAN </div>
-			<div style="flex:1"> </div>
-			<button id="popup-button" class="button" style="flex:1" onclick="nextRound()"> NEXT ROUND </button>
-			<div style="flex:1"> </div>
+			<div id="popup-main-message"> CORRECT! </div>
+			<div id="popup-explain-message-1" class="popup-explain-message"> </div>
+			<div id="popup-explain-message-2" class="popup-explain-message"> </div>
+			<div id="popup-explain-message-3" class="popup-explain-message"> </div>
+			<div id="popup-button-container"> <button id="popup-button" class="button" onclick="nextRound()"> NEXT ROUND </button> </div>
 		</div>
 		
 		<script src="sizegame.js"></script>
