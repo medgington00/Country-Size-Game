@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+		<title>Country Size Game</title>
+		
+		<!-- Favicon setup -->
+		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		</head>
+	
+	<body>
+	
+		<div class="flexbox-row" id="header">
+			<div id="header"> COUNTRY SIZE GAME </div>
+		</div>
+		
+		<div class="flexbox-row">
+			<div style="flex:3"> </div>
+			<div id="which-is-larger"> WHICH IS LARGER? </div>
+			<div style="flex:3"> </div>
+		</div>
+		
+		<div class="flexbox-row">
+			<div style="flex:3"> </div>
+			<div id="two-country-container"> 
+				<div class="two-country-text" id="country-1-text" style="flex:4"> COUNTRY 1</div>
+				<div class="two-country-text"  style="flex:1;font-size:36px;"> OR </div>
+				<div class="two-country-text" id="country-2-text" style="flex:4"> COUNTRY 2</div>
+			</div>
+			<div style="flex:3"> </div>
+		</div>
+		
+		<div class="flexbox-row">
+			<div style="flex:3"> </div>
+			<div id="top-message"> </div>
+			<div style="flex:3"> </div>
+		</div>
+		
+		<div class="flexbox-row">
+			<div style="flex:3"> </div>
+			<button class="button" id="country-1-button" style="flex:1" onclick="checkAnswer(1)"> COUNTRY ONE </button>
+			<div id="streak-container" style="flex:1">
+				<div style="flex:2"> </div>
+				<div id="streak-box" style="flex:3"> 0 </div>
+				<div style="flex:2"> </div>
+			</div>
+			<button class="button" id="country-2-button" style="flex:1" onclick="checkAnswer(2)"> COUNTRY TWO </button>
+			<div style="flex:3"> </div>
+		</div>
+		
+		<!-- POPUP ELEMENTS --------------------------------------------------------------------------------------------------------------------------->
+		<div id="popup-background"> </div>
+		<div id="popup" class="popup"> 
+			<div style="flex:1"> </div>
+			<div id="popup-main-message" style="flex:1"> CORRECT! </div>
+			<div style="flex:1"> </div>
+			<div id="popup-explain-message" style="flex:1"> RUSSIA IS 99.5% LARGER THAN THE VATICAN </div>
+			<div style="flex:1"> </div>
+			<button id="popup-button" class="button" style="flex:1" onclick="nextRound()"> NEXT ROUND </button>
+			<div style="flex:1"> </div>
+		</div>
+		
+		<script src="sizegame.js"></script>
+	</body>
+</html>
