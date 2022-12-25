@@ -1,12 +1,10 @@
-
-
-const countryOneText = document.getElementById("country-1-text");
-const countryOrText = document.getElementById("country-or-text");
-const countryTwoText = document.getElementById("country-2-text");
-
 const countryOneButton = document.getElementById("country-1-button");
-const streakBox = document.getElementById("streak-box");
+const buttonOneSpan = document.getElementById("button-1-span");
+const countryOrText = document.getElementById("country-or-text");
 const countryTwoButton = document.getElementById("country-2-button");
+const buttonTwoSpan = document.getElementById("button-2-span");
+
+const streakBox = document.getElementById("streak-box");
 
 const lifeOne = document.getElementById("life-1");
 const lifeTwo = document.getElementById("life-2");
@@ -20,11 +18,17 @@ const popupExplainMessageTwo = document.getElementById("popup-explain-message-2"
 const popupExplainMessageThree = document.getElementById("popup-explain-message-3");
 const popupButton = document.getElementById("popup-button");
 
+const settingsPopup = document.getElementById("settings-popup");
+const flagOnyModeCheckbox = document.getElementById("flag-only-switch");
+const isAudioEnabledCheckbox = document.getElementById("audio-switch");
+
+flagOnyModeCheckbox.checked = false;
+isAudioEnabledCheckbox.checked = false;
+
 //Setup variables
 let correct = 0;
 let country1;
 let country2;
-let streak = 0;
 let life = 3;
 /*
  |LEVEL	|STREAK	|RANGE	|COLOR 	|
@@ -35,7 +39,11 @@ let life = 3;
  |	4	|16-19	|10		|#D83324|
  |	5	|20+	|5		|#991A1E|
 */
+let streak = 0;
 let range = 50;
+
+let flagOnlyMode = 0;
+let isAudioEnabled = 0;
 
 const correctNoise = new Audio("correct.mp3");
 const incorrectNoise = new Audio("incorrect.mp3");
@@ -44,8 +52,6 @@ let countryListArr = "";
 let countryListSortedArr = new Array(195);
 
 setCountryListString();
-
-
  
 nextRound();
 
@@ -62,12 +68,12 @@ function newGame() {
 }
 
 function nextRound() {
-	countryOneText.classList.add("two-country-text-hidden");
-	countryOrText.classList.add("two-country-text-hidden");
-	countryTwoText.classList.add("two-country-text-hidden");
-	
-	countryOneButton.classList.add("button-hidden");
-	countryTwoButton.classList.add("button-hidden");
+	buttonOneSpan.style.transition = "0s";
+	buttonOneSpan.style.transform = "scale(0)";
+	countryOrText.style.transition = "0s";
+	countryOrText.style.transform = "scale(0)";
+	buttonTwoSpan.style.transition = "0s";
+	buttonTwoSpan.style.transform = "scale(0)";
 	
 	streakBox.textContent = streak;
 	let tempArr = getRandomCountries(range);
@@ -83,15 +89,16 @@ function nextRound() {
 	
 	closePopup();
 	
-	setTimeout( function(){countryOneText.classList.remove("two-country-text-hidden");}, 100);
-	setTimeout( function(){countryOneButton.classList.remove("button-hidden");}, 100);
-	setTimeout( function(){countryOrText.classList.remove("two-country-text-hidden");}, 800);
-	setTimeout( function(){countryTwoText.classList.remove("two-country-text-hidden");}, 1500);
-	setTimeout( function(){countryTwoButton.classList.remove("button-hidden");}, 100);
+	setTimeout( function(){buttonOneSpan.style.transition = "1s";}, 100);
+	setTimeout( function(){buttonOneSpan.style.transform = "scale(1)";}, 100);
+	setTimeout( function(){countryOrText.style.transition = "1s";}, 800);
+	setTimeout( function(){countryOrText.style.transform = "scale(1)";}, 800);
+	setTimeout( function(){buttonTwoSpan.style.transition = "1s";}, 1500);
+	setTimeout( function(){buttonTwoSpan.style.transform = "scale(1)";}, 1500);
 }
 
 //Returns an array with two random countries within maxRankDifference places of each other on the ranking scale
-function getRandomCountries(maxRankDifference) {
+function getRandomCountries1(maxRankDifference) {
 	let temp1 = Math.floor(Math.random() * 195);
 	
 	let temp2 = -1;
@@ -104,12 +111,33 @@ function getRandomCountries(maxRankDifference) {
 	return new Array(countryListSortedArr[temp1],countryListSortedArr[temp2]);
 }
 
-function setTextContent() {
-	countryOneText.textContent = country1.name;
-	countryTwoText.textContent = country2.name;
+function getRandomCountries(maxRankDistance) {
+	let temp1 = Math.floor(Math.random() * 195);
 	
-	countryOneButton.textContent = country1.flag;
-	countryTwoButton.textContent = country2.flag;
+	let temp2 = -1;
+	
+	while(temp2 < 0 || temp2 > 194 || temp1 == temp2) {
+		temp2 = Math.floor(Math.random() * (11 - 1) + 1);
+		sign = Math.floor(Math.random() * (2 - 0));
+		if(sign == 0) {
+			temp2 = temp1 - maxRankDistance + temp2;
+		} else {
+			temp2 = temp1 + maxRankDistance - temp2;
+		}
+	}
+	
+	return new Array(countryListSortedArr[temp1],countryListSortedArr[temp2]);
+}
+
+function setTextContent() {
+	if(flagOnlyMode == 0) {
+		buttonOneSpan.textContent = country1.name;
+		buttonTwoSpan.textContent = country2.name;
+	} else {
+		buttonOneSpan.textContent = country1.flag;
+		buttonTwoSpan.textContent = country2.flag;
+	}
+	
 }
 
 function checkAnswer(buttonClicked) {
@@ -123,24 +151,30 @@ function checkAnswer(buttonClicked) {
 	let button = "";
 	
 	if(isCorrect) {
-		correctNoise.play();
+		popupButton.onclick = function(){ nextRound() };
+		if(isAudioEnabled == 1) { correctNoise.play(); }
 		main = "CORRECT!";
 		mainColor = "green";
 		button = "NEXT ROUND";
 		streak++;
 		setLevel();
 	} else if(life>1) {
-		incorrectNoise.play();
+		popupButton.onclick = function(){ nextRound() };
+		if(isAudioEnabled == 1) { incorrectNoise.play(); }
 		main = "INCORRECT";
 		mainColor = "red";
 		button = "NEXT ROUND";
 		removeLife();
 		setLevel();
 	} else {
-		incorrectNoise.play();
+		popupButton.onclick = function(){ newGame() };
+		if(isAudioEnabled == 1) { incorrectNoise.play(); }
 		main = "INCORRECT";
 		mainColor = "red";
-		explain2 = "YOUR STREAK ENDED AT " + streak + " COUNTRIES";
+		if(streak == 1) {
+			explain2 = "YOUR STREAK ENDED AT " + streak + " COUNTRY";
+		} else { explain2 = "YOUR STREAK ENDED AT " + streak + " COUNTRIES"; }
+		
 		explain3 = getGameoverMessage();
 		button = "TRY AGAIN";
 		popupButton.onclick = newGame;
@@ -293,6 +327,10 @@ function openPopup(main, mainColor, explain1, explain2, explain3, button) {
 	popupButton.textContent = button;
 	popup.classList.add("popup-enabled");
 	popupBackground.style.visibility = "visible";
+	
+	if(main == "ABOUT" || main == "HOW TO PLAY") {
+		popupButton.onclick = function(){ closePopup() };
+	}
 }
 
 function closePopup() {
@@ -300,6 +338,42 @@ function closePopup() {
 	//popupButtonYes.style.transition = "0s";
 	//popupButtonNo.style.transition = "0s";
 	popupBackground.style.visibility = "hidden";
+}
+
+function openSettingsPopup() {
+	settingsPopup.classList.add("popup-enabled");
+}
+
+function closeSettingsPopup() {
+	settingsPopup.classList.remove("popup-enabled");
+	popupBackground.style.visibility = "hidden";
+}
+
+function toggleFlagOnlyMode() {
+	
+	if(flagOnlyMode == 0) {
+		flagOnlyMode = 1;
+	} else { flagOnlyMode = 0; }
+	
+	setFontSize();
+	setTextContent();
+
+}
+
+function toggleIsAudioEnabled() {
+	if(isAudioEnabled == 0) {
+		isAudioEnabled = 1;
+	} else { isAudioEnabled = 0; }
+}
+
+function setFontSize() {
+	if(flagOnlyMode == 1) {
+		countryOneButton.style.fontSize = "96px";
+		countryTwoButton.style.fontSize = "96px";
+	} else { 
+		countryOneButton.style.fontSize = "100%";
+		countryTwoButton.style.fontSize = "100%";
+	}
 }
 
 function setCountryListString() {

@@ -16,42 +16,26 @@
 			<div id="header-center"> COUNTRY SIZE GAME </div>
 			<div id="header-right"> 
 				<button id="header-right-button" style="margin-right:1vw;" onclick="openPopup('HOW TO PLAY', 'white', 'GUESS WHICH COUNTRY YOU BELIEVE TO BE LARGER', 'DIFFICULTY INCREASES AS STREAK GETS HIGHER', 'YOU HAVE THREE LIVES', 'LET\'S PLAY')"> <img src="images/how-to-play.png" style="height:2vw"> </button>
-				<button id="header-right-button" style="margin-right:2vw;" onclick="openPopup('ABOUT', 'white', 'COUNTRY TOTAL MASS PROVIDED BY WIKIPEDIA', 'INCLUDES BOTH LAND AND WATER WITHOUT TERRITORIES', 'QUESTIONS/CONCERNS? CONTACT ME AT EDGINGTON.63@OSU.EDU', 'CLOSE')"> <img src="images/about.png" style="height:2vw"> </button>
-				<!--<button id="header-right-button" style="margin-right:2vw;"> <img src="images/settings.png" style="height:2vw"> </button>-->
+				<button id="header-right-button" style="margin-right:1vw;" onclick="openPopup('ABOUT', 'white', 'COUNTRY TOTAL MASS PROVIDED BY WIKIPEDIA', 'INCLUDES BOTH LAND AND WATER WITHOUT TERRITORIES', 'QUESTIONS/CONCERNS? CONTACT ME AT EDGINGTON.63@OSU.EDU', 'CLOSE')"> <img src="images/about.png" style="height:2vw"> </button>
+				<button id="header-right-button" style="margin-right:2vw;"> <img src="images/settings.png" style="height:2vw;" onclick="openSettingsPopup()"> </button>
 			</div>
 		</div>
 		
 		<div class="flexbox-row">
-			<div style="flex:3"> </div>
-			<div id="which-is-larger"> WHICH IS LARGER? </div>
-			<div style="flex:3"> </div>
+			<div style="flex:9"> </div>
+			<div id="which-is-larger" style="width:40%"> WHICH IS LARGER? </div>
+			<div style="flex:9"> </div>
 		</div>
 		
 		<div class="flexbox-row">
-			<div style="flex:3"> </div>
-			<div id="two-country-container"> 
-				<div class="two-country-text" id="country-1-text" style="flex:4"> COUNTRY 1</div>
-				<div class="two-country-text" id="country-or-text" style="flex:1;font-size:2.75vw;"> OR </div>
-				<div class="two-country-text" id="country-2-text" style="flex:4"> COUNTRY 2</div>
-			</div>
-			<div style="flex:3"> </div>
+			<button class="two-country-button" id="country-1-button" onclick="checkAnswer(1)"> <div id="button-1-span">  </div> </button>
+			<div id="country-or-text"> OR </div>
+			<button class="two-country-button" id="country-2-button" onclick="checkAnswer(2)"> <div id="button-2-span">  </div> </button>
 		</div>
 		
 		<div class="flexbox-row">
 			<div style="flex:3"> </div>
 			<div id="top-message"> </div>
-			<div style="flex:3"> </div>
-		</div>
-		
-		<div class="flexbox-row">
-			<div style="flex:3"> </div>
-			<button class="button" id="country-1-button" style="flex:1" onclick="checkAnswer(1)"> COUNTRY ONE </button>
-			<div id="streak-container" style="flex:1">
-				<div style="flex:2"> </div>
-				<div id="streak-box" style="flex:3"> 0 </div>
-				<div style="flex:2"> </div>
-			</div>
-			<button class="button" id="country-2-button" style="flex:1" onclick="checkAnswer(2)"> COUNTRY TWO </button>
 			<div style="flex:3"> </div>
 		</div>
 		
@@ -61,14 +45,51 @@
 			<div class="life-container" id="life-3"> </div>
 		</div>
 		
+		<div class="flexbox-row">
+			<div style="flex:3"> </div>
+			<div id="streak-container" style="flex:1">
+				<div style="flex:2"> </div>
+				<div id="streak-box" style="flex:3"> 0 </div>
+				<div style="flex:2"> </div>
+			</div>
+			<div style="flex:3"> </div>
+		</div>
+		
 		<!-- POPUP ELEMENTS --------------------------------------------------------------------------------------------------------------------------->
 		<div id="popup-background"> </div>
+		<!-- Popup for all but settings -->
 		<div id="popup" class="popup"> 
 			<div id="popup-main-message"> CORRECT! </div>
 			<div id="popup-explain-message-1" class="popup-explain-message"> </div>
 			<div id="popup-explain-message-2" class="popup-explain-message"> </div>
 			<div id="popup-explain-message-3" class="popup-explain-message"> </div>
 			<div id="popup-button-container"> <button id="popup-button" class="button" onclick="nextRound()"> NEXT ROUND </button> </div>
+		</div>
+		<!-- Settings popup -->
+		<div id="settings-popup" class="popup"> 
+			<div id="settings-popup-main-message" style="height:20%;background-color:black;width:100%;"> SETTINGS </div>
+			<div class="settings-option-container">
+				<div style=""> FLAG ONLY MODE </div>
+				    <div class="onoffswitch">
+						<input type="checkbox" name="flag-only-switch" class="onoffswitch-checkbox" id="flag-only-switch" tabindex="0" onclick="toggleFlagOnlyMode()">
+						<label class="onoffswitch-label" for="flag-only-switch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+				</div>
+			</div>
+			<div class="settings-option-container">
+			<div style=""> AUDIO </div>
+				    <div class="onoffswitch">
+						<input type="checkbox" name="audio-switch" class="onoffswitch-checkbox" id="audio-switch" tabindex="0" onclick="toggleIsAudioEnabled()">
+						<label class="onoffswitch-label" for="audio-switch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+				</div>
+			</div>
+			<div class="settings-option-container">  </div>
+			<div id="popup-button-container" style="height:20%;background-color:black;width:100%;"> <button id="popup-button" class="button" onclick="closeSettingsPopup()"> CLOSE </button> </div>
 		</div>
 		
 		<script src="sizegame.js"></script>
