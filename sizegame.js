@@ -1,3 +1,10 @@
+const gameplayElementsContainer = document.getElementById("gameplay-elements-container");
+const homeElementsContainer = document.getElementById("home-elements-container");
+const homeButton = document.getElementById("home-button");
+const howToPlayButton = document.getElementById("how-to-play-button");
+const aboutButton = document.getElementById("about-button");
+const settingsButton = document.getElementById("settings-button");
+
 const countryOneButton = document.getElementById("country-1-button");
 const buttonOneSpan = document.getElementById("button-1-span");
 const countryOrText = document.getElementById("country-or-text");
@@ -9,6 +16,8 @@ const streakBox = document.getElementById("streak-box");
 const lifeOne = document.getElementById("life-1");
 const lifeTwo = document.getElementById("life-2");
 const lifeThree = document.getElementById("life-3");
+
+const timerBar = document.getElementById("timer-bar");
 
 const popup = document.getElementById("popup");
 const popupBackground = document.getElementById("popup-background");
@@ -22,8 +31,8 @@ const settingsPopup = document.getElementById("settings-popup");
 const flagOnyModeCheckbox = document.getElementById("flag-only-switch");
 const isAudioEnabledCheckbox = document.getElementById("audio-switch");
 
-flagOnyModeCheckbox.checked = false;
-isAudioEnabledCheckbox.checked = false;
+//flagOnyModeCheckbox.checked = false;
+//isAudioEnabledCheckbox.checked = false;
 
 //Setup variables
 let correct = 0;
@@ -45,15 +54,27 @@ let range = 50;
 let flagOnlyMode = 0;
 let isAudioEnabled = 0;
 
-const correctNoise = new Audio("correct.mp3");
-const incorrectNoise = new Audio("incorrect.mp3");
+const roundTime = 5;
+let timer = "";
+
+if(flagOnyModeCheckbox.checked == true) {
+	flagOnlyMode = 1;
+	setFontSize();
+}
+if(isAudioEnabledCheckbox.checked == true) {
+	isAudioEnabled = 1;
+}
+
+const correctNoise = new Audio("sounds/correct.mp3");
+const incorrectNoise = new Audio("sounds/incorrect.mp3");
+const whooshNoise = new Audio("sounds/whoosh.mp3");
 
 let countryListArr = "";
 let countryListSortedArr = new Array(195);
 
 setCountryListString();
- 
-nextRound();
+
+homeButton.classList.add("hidden");
 
 function newGame() {
 	closePopup();
@@ -75,6 +96,8 @@ function nextRound() {
 	buttonTwoSpan.style.transition = "0s";
 	buttonTwoSpan.style.transform = "scale(0)";
 	
+	
+	
 	streakBox.textContent = streak;
 	let tempArr = getRandomCountries(range);
 	country1 = tempArr[0];
@@ -91,10 +114,22 @@ function nextRound() {
 	
 	setTimeout( function(){buttonOneSpan.style.transition = "1s";}, 100);
 	setTimeout( function(){buttonOneSpan.style.transform = "scale(1)";}, 100);
+	setTimeout( function(){if(isAudioEnabled == 1) { whooshNoise.play(); };}, 100);
 	setTimeout( function(){countryOrText.style.transition = "1s";}, 800);
 	setTimeout( function(){countryOrText.style.transform = "scale(1)";}, 800);
+	setTimeout( function(){if(isAudioEnabled == 1) { whooshNoise.play(); };}, 800);
 	setTimeout( function(){buttonTwoSpan.style.transition = "1s";}, 1500);
 	setTimeout( function(){buttonTwoSpan.style.transform = "scale(1)";}, 1500);
+	setTimeout( function(){if(isAudioEnabled == 1) { whooshNoise.play(); };}, 1500);
+	//setTimeout( function(){startTimer();}, 2000);
+	
+}
+
+function startTimer() {
+	//timerBar.style.width = "66.6%";
+	//setTimeout( function(){timerBar.style.width = "33.3%";}, (1000*roundTime / 3));
+	//setTimeout( function(){timerBar.style.width = "0%";}, (1000*roundTime / 3) * 2);
+	//timer = setTimeout(function(){ checkAnswer(0)}, (1000*roundTime)+325);
 }
 
 //Returns an array with two random countries within maxRankDifference places of each other on the ranking scale
@@ -141,6 +176,7 @@ function setTextContent() {
 }
 
 function checkAnswer(buttonClicked) {
+	clearTimeout(timer);
 	let isCorrect = buttonClicked == correct;
 	
 	let main = "";
@@ -152,6 +188,8 @@ function checkAnswer(buttonClicked) {
 	
 	if(isCorrect) {
 		popupButton.onclick = function(){ nextRound() };
+		timerBar.style.width = "100%";
+		timerBar.style.backgroundColor = "green%";
 		if(isAudioEnabled == 1) { correctNoise.play(); }
 		main = "CORRECT!";
 		mainColor = "green";
@@ -342,6 +380,7 @@ function closePopup() {
 
 function openSettingsPopup() {
 	settingsPopup.classList.add("popup-enabled");
+	popupBackground.style.visibility = "visible";
 }
 
 function closeSettingsPopup() {
@@ -374,6 +413,32 @@ function setFontSize() {
 		countryOneButton.style.fontSize = "100%";
 		countryTwoButton.style.fontSize = "100%";
 	}
+}
+
+function home() {
+	
+	gameplayElementsContainer.classList.add("hidden");
+	homeButton.classList.add("hidden");
+	
+	homeElementsContainer.classList.remove("hidden");
+	howToPlayButton.classList.remove("hidden");
+	aboutButton.classList.remove("hidden");
+	settingsButton.classList.remove("hidden");
+	
+	clearTimeout(timer);
+	setTimeout(function(){clearTimeout(timer)},4000);
+}
+
+function play() {
+	homeElementsContainer.classList.add("hidden");
+	howToPlayButton.classList.add("hidden");
+	aboutButton.classList.add("hidden");
+	settingsButton.classList.add("hidden");
+	
+	gameplayElementsContainer.classList.remove("hidden");
+	homeButton.classList.remove("hidden");
+	
+	newGame();
 }
 
 function setCountryListString() {
