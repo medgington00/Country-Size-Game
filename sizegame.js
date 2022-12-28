@@ -1,10 +1,24 @@
 const gameplayElementsContainer = document.getElementById("gameplay-elements-container");
 const homeElementsContainer = document.getElementById("home-elements-container");
 const homeButton = document.getElementById("home-button");
+
+const menuContainer = document.getElementById("menu-container");
+
+const playButton = document.getElementById("play-button");
 const howToPlayButton = document.getElementById("how-to-play-button");
 const aboutButton = document.getElementById("about-button");
 const settingsButton = document.getElementById("settings-button");
+const playTextContainer = document.getElementById("play-text-container");
+const howToPlayTextContainer = document.getElementById("how-to-play-text-container");
+const settingsTextContainer = document.getElementById("settings-text-container");
+const aboutTextContainer = document.getElementById("about-text-container");
 
+const highScoreText = document.getElementById("high-score-text");
+highScoreText.textContent = "HIGH SCORE: " + localStorage.getItem("highscore");
+
+const gameplayContainer = document.getElementById("gameplay-container");
+
+const twoCountryButton = document.getElementsByClassName("two-country-button");
 const countryOneButton = document.getElementById("country-1-button");
 const buttonOneSpan = document.getElementById("button-1-span");
 const countryOrText = document.getElementById("country-or-text");
@@ -57,13 +71,16 @@ let isAudioEnabled = 0;
 const roundTime = 5;
 let timer = "";
 
-if(flagOnyModeCheckbox.checked == true) {
-	flagOnlyMode = 1;
-	setFontSize();
-}
+
+
 if(isAudioEnabledCheckbox.checked == true) {
 	isAudioEnabled = 1;
 }
+if(flagOnyModeCheckbox.checked == true) {
+	flagOnlyMode = 1;
+}
+
+setFontSize();
 
 const correctNoise = new Audio("sounds/correct.mp3");
 const incorrectNoise = new Audio("sounds/incorrect.mp3");
@@ -74,7 +91,7 @@ let countryListSortedArr = new Array(195);
 
 setCountryListString();
 
-homeButton.classList.add("hidden");
+menuContainer.style.opacity = "1";
 
 function newGame() {
 	closePopup();
@@ -206,6 +223,9 @@ function checkAnswer(buttonClicked) {
 		setLevel();
 	} else {
 		popupButton.onclick = function(){ newGame() };
+		if(parseInt(streak) > localStorage.getItem("highscore")) {
+			localStorage.setItem("highscore",streak);
+		}
 		if(isAudioEnabled == 1) { incorrectNoise.play(); }
 		main = "INCORRECT";
 		mainColor = "red";
@@ -407,18 +427,18 @@ function toggleIsAudioEnabled() {
 
 function setFontSize() {
 	if(flagOnlyMode == 1) {
-		countryOneButton.style.fontSize = "96px";
-		countryTwoButton.style.fontSize = "96px";
+		twoCountryButton[0].style.fontSize = "6em";
+		twoCountryButton[1].style.fontSize = "6em";
 	} else { 
-		countryOneButton.style.fontSize = "100%";
-		countryTwoButton.style.fontSize = "100%";
+		twoCountryButton[0].style.fontSize = "2em";
+		twoCountryButton[1].style.fontSize = "2em";
 	}
 }
 
 function home() {
 	
 	gameplayElementsContainer.classList.add("hidden");
-	homeButton.classList.add("hidden");
+	//homeButton.classList.add("hidden");
 	
 	homeElementsContainer.classList.remove("hidden");
 	howToPlayButton.classList.remove("hidden");
@@ -439,6 +459,108 @@ function play() {
 	homeButton.classList.remove("hidden");
 	
 	newGame();
+}
+
+function clickHome() {
+	highScoreText.textContent = "HIGH SCORE: " + localStorage.getItem("highscore");
+	playButton.onclick = clickPlay;
+	menuContainer.style.opacity= "0";
+	gameplayContainer.style.opacity= "0";
+	countryOrText.style.transform = "scale(0)";
+	
+	setTimeout(function(){gameplayContainer.style.display= "none";},500);
+	setTimeout(function(){menuContainer.style.display= "flex";},500);
+	
+	setTimeout(function(){menuContainer.style.opacity= "1";},600);
+}
+
+function clickBegin() {
+	playButton.onclick = "";
+	buttonOneSpan.textContent = "";
+	buttonTwoSpan.textContent = "";
+	menuContainer.style.opacity= "0";
+	setTimeout(function(){menuContainer.style.display= "none";},500);
+	setTimeout(function(){gameplayContainer.style.display= "flex";},700);
+	setTimeout(function(){gameplayContainer.style.opacity= "1";},800);
+	setTimeout(function(){newGame();},2000);
+	
+}
+
+function clickReset() {
+	localStorage.setItem("highscore","0");
+	highScoreText.textContent = "HIGH SCORE: 0";
+}
+
+function clickPlay() {
+	howToPlayTextContainer.style.display = "none";
+	settingsTextContainer.style.display = "none";
+	aboutTextContainer.style.display = "none";
+	
+	playTextContainer.style.display = "inline";
+	
+	howToPlayButton.classList.add("menu-button");
+	howToPlayButton.classList.remove("menu-button-pressed");
+	aboutButton.classList.add("menu-button");
+	aboutButton.classList.remove("menu-button-pressed");
+	settingsButton.classList.add("menu-button");
+	settingsButton.classList.remove("menu-button-pressed");
+	
+	playButton.classList.add("menu-button-pressed");
+	playButton.classList.remove("menu-button");
+}
+
+function clickHowToPlay() {
+	playTextContainer.style.display = "none";
+	settingsTextContainer.style.display = "none";
+	aboutTextContainer.style.display = "none";
+	
+	howToPlayTextContainer.style.display = "inline";
+	
+	playButton.classList.add("menu-button");
+	playButton.classList.remove("menu-button-pressed");
+	aboutButton.classList.add("menu-button");
+	aboutButton.classList.remove("menu-button-pressed");
+	settingsButton.classList.add("menu-button");
+	settingsButton.classList.remove("menu-button-pressed");
+	
+	howToPlayButton.classList.add("menu-button-pressed");
+	howToPlayButton.classList.remove("menu-button");
+}
+
+function clickSettings() {
+	playTextContainer.style.display = "none";
+	howToPlayTextContainer.style.display = "none";
+	aboutTextContainer.style.display = "none";
+	
+	settingsTextContainer.style.display = "inline";
+	
+	playButton.classList.add("menu-button");
+	playButton.classList.remove("menu-button-pressed");
+	aboutButton.classList.add("menu-button");
+	aboutButton.classList.remove("menu-button-pressed");
+	howToPlayButton.classList.add("menu-button");
+	howToPlayButton.classList.remove("menu-button-pressed");
+	
+	settingsButton.classList.add("menu-button-pressed");
+	settingsButton.classList.remove("menu-button");
+}
+
+function clickAbout() {
+	playTextContainer.style.display = "none";
+	howToPlayTextContainer.style.display = "none";
+	settingsTextContainer.style.display = "none";
+	
+	aboutTextContainer.style.display = "inline";
+	
+	playButton.classList.add("menu-button");
+	playButton.classList.remove("menu-button-pressed");
+	howToPlayButton.classList.add("menu-button");
+	howToPlayButton.classList.remove("menu-button-pressed");
+	settingsButton.classList.add("menu-button");
+	settingsButton.classList.remove("menu-button-pressed");
+	
+	aboutButton.classList.add("menu-button-pressed");
+	aboutButton.classList.remove("menu-button");
 }
 
 function setCountryListString() {
