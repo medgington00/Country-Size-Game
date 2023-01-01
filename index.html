@@ -26,29 +26,25 @@
 				<button class="menu-button" id="about-button" onclick="clickAbout()"> ABOUT </button>
 			</div>
 			<div class="menu-text-container" id="play-text-container">
-				<button class="menu-button" id="begin-button" onclick="clickBegin()"> BEGIN </button>
-				<hr style="width:80%">
+				<button id="begin-button" onclick="clickBegin()"> BEGIN </button>
 				<div style="display:flex;flex-direction:column;align-items:center;gap:.25em;">
 					<span id="high-score-text"> HIGH SCORE: 0 </span> <br><br>
-					<div id="changelog-container">
-						v1.0.0 -- Added High Scores
-					</div>
 				</div>
 			</div>
 			<div class="menu-text-container" id="how-to-play-text-container" style="display:none;">
 				<h1 style="text-shadow: 0px 4px 0px var(--light);"> HOW TO PLAY </h1>
 				<hr style="width:80%">
 				<p>
-					Guess which country you believe to be larger <br> <br>
-					As your streak rises, the countries become more similar in size <br> <br>
-					You have three lives <br> <br>
+					Guess the larger country <br> <br>
+					Difficulty increases with streak <br> <br>
+					You have three lives <br> <br> <br> <br>
 					For an added challenge, try flags only mode
 				</p>
 			</div>
 			<div class="menu-text-container" id="settings-text-container" style="display:none;">
 				<h1 style="text-shadow: 0px 4px 0px var(--light);"> SETTINGS </h1>
 				<hr style="width:80%">
-				<span style="display:flex;flex-direction:column;align-items:center;">
+				<span>
 					<br><br><br>FLAG ONLY MODE
 					<div style="display:flex;align-items:center;justify-content:center;width:100%;height:3em;">
 						<div class="onoffswitch">
@@ -88,48 +84,44 @@
 			<div id="which-is-larger"> WHICH IS LARGER? </div>
 			
 			<div id="country-buttons-container">
-				<button class="two-country-button" id="country-1-button" onclick="checkAnswer(1)"> <div id="button-1-span">  </div> </button>
+				<button class="two-country-button" id="country-1-button"> <div id="button-1-span">  </div> </button>
 				<div id="country-or-text" style="transform:scale(0)"> OR </div>
-				<button class="two-country-button" id="country-2-button" onclick="checkAnswer(2)"> <div id="button-2-span">  </div> </button>
+				<button class="two-country-button" id="country-2-button"> <div id="button-2-span">  </div> </button>
 			</div>
 			
 			
 			<div id="streak-container">
-				<div class="streak-side-container">
+				<div class="health-container">
 				<div class="life-container" id="life-1"> </div>
 				<div class="life-container" id="life-2"> </div>
 				<div class="life-container" id="life-3"> </div>
 				</div>
 				<div id="streak-box"> 0 </div>
-				<div class="streak-side-container">
-					<div id="timer-bar-container"> <div id="timer-bar" class="timer-bar"> </div> </div>
-				</div>
 			</div>
+			
+			<button id="lower-button" class="popup-button" style="display:none;"> </button>
 		
 		</span>
 		
 		<!-- POPUP ELEMENTS --------------------------------------------------------------------------------------------------------------------------->
-		<button id="popup-background" onclick="closePopup()"> </button>
+		<button id="popup-background" onclick="closePopup();showLowerButton()"> </button>
 		<!-- Popup for all but settings -->
+		<div id="reset-button-popup">
+			Are you sure you want to reset your high score?
+			<div> <button class="reset-button-popup-option" onclick="confirmReset()"> YES </button> <button class="reset-button-popup-option" onclick="closeResetPopup()"> NO </button> </div>
+		</div>
+		
 		<div id="popup" class="popup"> 
 			
 			<div id="popup-main-message"> CORRECT! </div>
-			<button class="close-button" onclick="closePopup()"> <b> X </b> </button>
+			<button class="close-button" onclick="closePopup();showLowerButton()"> <b> X </b> </button>
 			<div id="popup-explain-message-1" class="popup-explain-message"> </div>
 			<div id="popup-explain-message-2" class="popup-explain-message"> </div>
 			<div id="popup-explain-message-3" class="popup-explain-message"> </div>
-			<div id="popup-button-container"> <button id="popup-button" class="button" onclick="nextRound()"> NEXT ROUND </button> </div>
-		</div>
-		<!-- Settings popup -->
-		<div id="settings-popup" class="popup"> 
-			<div id="settings-popup-main-message" style="height:20%;width:100%;"> SETTINGS </div>
-			
-			<div class="settings-option-container">
-			<div style=""> AUDIO </div>
-				    
+			<div id="popup-button-container"> 
+				<button id="popup-button" class="popup-button" onclick="nextRound()"> NEXT ROUND </button> 
+				<button id="popup-home-button" class="popup-button" onClick="clickHome()" style="display:none;margin-left:2em;"> <img src="images/home-nobg.png" style="height:100%;"> </button>
 			</div>
-			<div class="settings-option-container">  </div>
-			<div id="popup-button-container" style="height:20%;width:100%;"> <button id="popup-button" class="button" onclick="closeSettingsPopup()"> CLOSE </button> </div>
 		</div>
 		
 		<div id="footer-container">
