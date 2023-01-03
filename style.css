@@ -8,7 +8,8 @@
 	--lighter:#686582;
 	
 	--text:#FFFFFF;
-	
+	--text-shadow:#2e2c3a;
+
 	--button:rgba(0,0,0,.35);
 	--button-hover:rgba(0,0,0,.5);
 	--button-active:rgba(0,0,0,.75);
@@ -45,13 +46,6 @@ body {
 	
 	background-color:var(--base);background-image: linear-gradient(0deg,var(--dark),var(--base)); background-repeat: no-repeat; background-attachment: fixed;
 }
-/*GET RID OF*/
-.flexbox-row {
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	margin-bottom:3vw;
-}
 
 /*HEADER --------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 #header-container {
@@ -80,7 +74,7 @@ body {
 }
 
 #title-button {
-	font-size: 300%;
+	font-size: 3em;
 	color:var(--text);
 	text-shadow: 0px 4px 0px var(--light);
 	font-family: 'Rubik', sans-serif;
@@ -271,9 +265,9 @@ body {
 	font-family: 'Rubik', sans-serif;
 	font-size:1em;
 	color:var(--text);
-	text-shadow: 	0px 6px 0px var(--button),
-					0px 4px 0px var(--button),
-					0px 2px 0px var(--button);
+	text-shadow: 	0px 6px 0px var(--text-shadow),
+					0px 4px 0px var(--text-shadow),
+					0px 2px 0px var(--text-shadow);
 	
 	background-color:var(--light);
 	
@@ -284,8 +278,8 @@ body {
 }
 
 .menu-button:hover {
-	text-shadow: 	0px 4px 0px var(--button-hover),
-					0px 2px 0px var(--button-hover);
+	text-shadow: 	0px 4px 0px var(--text-shadow),
+					0px 2px 0px var(--text-shadow);
 	
 	transform:translateY(3px);
 	transition:.2s;
@@ -293,7 +287,7 @@ body {
 
 .menu-button:active {
 	color:rgb(215,215,215);
-	text-shadow: 	0px 2px 0px var(--button-active);
+	text-shadow: 	0px 2px 0px var(--text-shadow);
 	
 	transform:translateY(6px);
 	transition:.2s;
@@ -306,7 +300,7 @@ body {
 	font-family: 'Rubik', sans-serif;
 	font-size:1em;
 	color:rgb(215,215,215);
-	text-shadow: 	0px 2px 0px var(--button-active);
+	text-shadow: 	0px 2px 0px var(--text-shadow);
 	
 	background-color:var(--light);
 	
@@ -365,8 +359,8 @@ body {
 	
 	height:100%;
 	width:5%;
-	margin-left:2vw;
-	margin-right:2vw;
+	margin-left:1em;
+	margin-right:1em;
 	
 	font-size:3em;
 	text-shadow: 0px 4px 0px var(--lighter);
@@ -401,14 +395,14 @@ body {
 
 .two-country-button:hover {
 	border:4px double var(--lighter);
-	box-shadow: 0px 15px 0px 0px var(--button-hover);
+	box-shadow: 0px 15px 0px 0px var(--button);
 	
 	transition:.075s;
 	transform:translateY(3px);
 }
 .two-country-button:active {
 	border:4px double var(--lighter);
-	box-shadow: 0px 12px 0px 0px var(--button-active);
+	box-shadow: 0px 12px 0px 0px var(--button);
 	
 	transition:.025s;
 	transform:translateY(6px);
@@ -425,11 +419,18 @@ body {
 #streak-container {
 	display:flex;
 	flex-direction:column;
-	justify-content:space-between;
+	justify-content:center;
 	align-items:center;
 	
-	width:36em;
+	width:10em;
+	height:7.5em;
 	margin-top:3em;	
+	margin-bottom:3em;
+	
+	background-color:var(--light);
+	
+	border:4px double var(--lighter);
+	border-radius:8px;
 }
 
 #streak-box {
@@ -437,18 +438,11 @@ body {
 	justify-content:center;
 	align-items:center;
 	
-	width:5%;
-	height:2em;
-	padding:.5em;
-	margin-bottom:1.5em;
+	width:100%;
+	height:1em;
 	
-	font-size:1.5vw;
+	font-size:2em;
 	text-shadow: 0px 4px 0px var(--darker);
-	
-	background-color:var(--light);
-	
-	border:4px double var(--lighter);
-	border-radius:8px;
 }
 
 .health-container {
@@ -458,12 +452,6 @@ body {
 	
 	width:10em;
 	height:2em;
-	margin-bottom:1.5em;
-	
-	background-color:var(--light);
-	
-	border:4px double var(--lighter);
-	border-radius:8px;
 }
 
 .life-container{
@@ -572,12 +560,12 @@ button {
 	top:0;
 	right:0;
 	padding:0;
-	height:1.5vw;
-	width:1.5vw;
+	height:1.5em;
+	width:1.5em;
 	background:none;
 	border:none;
-	font-size:1vw;
-	margin:.25vw;
+	font-size:1em;
+	margin:.25em;
 	transition:.25s;
 }
 
@@ -661,7 +649,7 @@ button {
 #footer-container {
 	display:flex;
 	width:100%;
-	height:3vw;
+	height:2em;
 	position:absolute;
 	bottom:0%;
 	align-items:center;
@@ -672,7 +660,7 @@ button {
 }
 
 #footer-text {
-	padding-right:1vw;
+	padding-right:1em;
 	font-size:16px;
 }
 
@@ -690,8 +678,76 @@ button {
 	transition:.5s;
 }
 
-.hidden {
-	transition:0s;
-	display:none;
-	visibility:hidden;
+/*Mobile CSS*/
+@media (max-width: 480px) {
+	html,body {
+		height:100%;
+		overflow:hidden;
+	}
+	
+	#title-button {
+		font-size:2em;
+	}
+	
+	#home-button {
+		height:3em;
+		width:3em;
+	}
+	
+	.menu-button {
+		width:100%;
+	}
+	
+	.menu-button-pressed {
+		width:100%;
+	}
+	
+	#gameplay-container {
+		justify-content:flex-start;
+	}
+	
+	#country-buttons-container {
+		flex-direction:column;
+		
+		width:100%;
+		height:40%;
+	}
+	
+	.two-country-button {
+		width:90%;
+		height:4em;
+	}
+	
+	#country-or-text {
+		width:15%;
+		margin-left:.5em;
+		margin-right:.5em;
+	}
+	
+	#streak-container {
+		width:30%;
+		height:10%;
+	}
+	
+	.health-container {
+		width:80%;
+		height:40%;
+	}
+	
+	.life-container {
+		width:50%;
+		height:75%;
+	}
+	
+	#streak-box {
+		width:7.5%;
+		height:15%;
+		
+		font-size:2em;
+	}
+	
+	.popup {
+		width:95%;
+	}
+	
 }
